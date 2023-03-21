@@ -1,12 +1,15 @@
+import 'package:edana/Model/tenantinfo_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../utils/colors.dart';
 import 'oopsBox.dart';
 
 class OTPSCreen extends StatefulWidget {
-  const OTPSCreen({super.key});
-
+   OTPSCreen({super.key,required this.tenantInfoModel});
+   
+   TenantInfoModel? tenantInfoModel;
   @override
   State<OTPSCreen> createState() => _OTPSCreenState();
 }
@@ -15,36 +18,38 @@ class _OTPSCreenState extends State<OTPSCreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          height: size.height,
-          width: size.width,
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/bg.png'), fit: BoxFit.fill),
-          ),
-          child: Column(
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Container(
+              height: ScreenUtil().setHeight(620),
+              width: size.width,
+              
+              child:Image.network( widget.tenantInfoModel!.tenantInfoData!.tenantInfo!.logoFileId!=null? 
+                'https://edana2-staging-fs.ed-space.net/file/${widget.tenantInfoModel!.tenantInfoData!.tenantInfo!.appLoginBgImgId}/download?tenantId=${widget.tenantInfoModel!.tenantInfoData!.tenantInfo!.tenantId}':'',fit: BoxFit.fill,)
+            ),
+             Column(
             mainAxisAlignment: MainAxisAlignment.center,
             //crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              SizedBox(height: 60.h,),
               Text(
                 'Welcome to',
                 style: TextStyle(
                     fontFamily: 'latoRegular',
-                    fontSize: 20,
+                    fontSize: 20.sp,
                     color: whiteTextColor),
               ),
               Text(
                 'Edana Portal App',
                 style: TextStyle(
                     fontFamily: 'latoBold',
-                    fontSize: 24,
+                    fontSize: 24.sp,
                     color: whiteTextColor),
               ),
               SizedBox(
-                height: size.height / 100,
+                height: 10.h,
               ),
               Center(
                 child: Column(
@@ -53,32 +58,32 @@ class _OTPSCreenState extends State<OTPSCreen> {
                       'In order to take the power and flexibility of',
                       style: TextStyle(
                           fontFamily: 'latoRegular',
-                          fontSize: 14,
+                          fontSize: 14.sp,
                           color: splashTextColor),
                     ),
                     Text(
                       'Ed-admin with you wherever you go, this app',
                       style: TextStyle(
                           fontFamily: 'latoRegular',
-                          fontSize: 14,
+                          fontSize: 14.sp,
                           color: splashTextColor),
                     ),
                     Text(
                       'needs to connect to your institution’s site.',
                       style: TextStyle(
                           fontFamily: 'latoRegular',
-                          fontSize: 14,
+                          fontSize: 14.sp,
                           color: splashTextColor),
                     ),
                   ],
                 ),
               ),
               SizedBox(
-                height: size.height / 40,
+                height: 10.h,
               ),
               SizedBox(
                 width: size.width / 1.05,
-                height: size.height / 1.60,
+                height: 420.h,
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15.0),
@@ -96,14 +101,14 @@ class _OTPSCreenState extends State<OTPSCreen> {
                               text: 'To begin, please enter the',
                               style: TextStyle(
                                   fontFamily: 'latoRegular',
-                                  fontSize: 14,
+                                  fontSize: 14.sp,
                                   color: hintTextColor),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: ' 6-digit',
                                   style: TextStyle(
                                       fontFamily: 'latoBold',
-                                      fontSize: 14,
+                                      fontSize: 14.sp,
                                       fontWeight: FontWeight.bold,
                                       color: hintTextColor),
                                 ),
@@ -111,7 +116,7 @@ class _OTPSCreenState extends State<OTPSCreen> {
                                   text: ' site',
                                   style: TextStyle(
                                       fontFamily: 'latoRegular',
-                                      fontSize: 14,
+                                      fontSize: 14.sp,
                                       color: hintTextColor),
                                 ),
                                 TextSpan(
@@ -119,30 +124,30 @@ class _OTPSCreenState extends State<OTPSCreen> {
                                       '\nactivation code that you have received from',
                                   style: TextStyle(
                                       fontFamily: 'latoRegular',
-                                      fontSize: 14,
+                                      fontSize: 14.sp,
                                       color: hintTextColor),
                                 ),
                                 TextSpan(
                                   text: '\nyour institution',
                                   style: TextStyle(
                                       fontFamily: 'latoRegular',
-                                      fontSize: 14,
+                                      fontSize: 14.sp,
                                       color: hintTextColor),
                                 ),
                                 // const TextSpan(text: '\nyour institution',)
                               ]),
                         ),
                         SizedBox(
-                          height: size.height / 30,
+                          height: 15.h,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
                               width:
-                                  40.0, // Customize the width of the OTP text field
+                                  40.w, // Customize the width of the OTP text field
                               height:
-                                  48.0, // Customize the height of the OTP text field
+                                  48.h, // Customize the height of the OTP text field
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 // border: Border.all(color: Colors.grey),
@@ -163,9 +168,9 @@ class _OTPSCreenState extends State<OTPSCreen> {
                             ),
                             Container(
                               width:
-                                  40.0, // Customize the width of the OTP text field
+                                  40.w, // Customize the width of the OTP text field
                               height:
-                                  48.0, // Customize the height of the OTP text field
+                                  48.h, // Customize the height of the OTP text field
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 // border: Border.all(color: Colors.grey),
@@ -186,9 +191,9 @@ class _OTPSCreenState extends State<OTPSCreen> {
                             ),
                             Container(
                               width:
-                                  40.0, // Customize the width of the OTP text field
+                                  40.w, // Customize the width of the OTP text field
                               height:
-                                  48.0, // Customize the height of the OTP text field
+                                  48.h, // Customize the height of the OTP text field
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 // border: Border.all(color: Colors.grey),
@@ -209,9 +214,9 @@ class _OTPSCreenState extends State<OTPSCreen> {
                             ),
                             Container(
                               width:
-                                  40.0, // Customize the width of the OTP text field
+                                  40.w, // Customize the width of the OTP text field
                               height:
-                                  48.0, // Customize the height of the OTP text field
+                                  48.h, // Customize the height of the OTP text field
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 // border: Border.all(color: Colors.grey),
@@ -232,9 +237,9 @@ class _OTPSCreenState extends State<OTPSCreen> {
                             ),
                             Container(
                               width:
-                                  40.0, // Customize the width of the OTP text field
+                                  40.w, // Customize the width of the OTP text field
                               height:
-                                  48.0, // Customize the height of the OTP text field
+                                  48.h, // Customize the height of the OTP text field
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 // border: Border.all(color: Colors.grey),
@@ -255,9 +260,9 @@ class _OTPSCreenState extends State<OTPSCreen> {
                             ),
                             Container(
                               width:
-                                  40.0, // Customize the width of the OTP text field
+                                  40.w, // Customize the width of the OTP text field
                               height:
-                                  48.0, // Customize the height of the OTP text field
+                                  48.h, // Customize the height of the OTP text field
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 // border: Border.all(color: Colors.grey),
@@ -292,7 +297,7 @@ class _OTPSCreenState extends State<OTPSCreen> {
                                 borderRadius: BorderRadius.circular(
                                     4.0), // Customize the border radius
                               ),
-
+      
                               // child: TextField(
                               //   textAlign: TextAlign.center,
                               //   keyboardType: TextInputType.number,
@@ -328,8 +333,8 @@ class _OTPSCreenState extends State<OTPSCreen> {
                           height: size.height / 30,
                         ),
                         SizedBox(
-                          height: size.height / 15,
-                          width: size.width / 1.35,
+                          height: 50.h,
+                          width: 300.w,
                           child: ElevatedButton(
                             style: ButtonStyle(
                               backgroundColor: MaterialStateProperty.all(
@@ -435,8 +440,11 @@ class _OTPSCreenState extends State<OTPSCreen> {
               )
             ],
           ),
+        
+          ],
         ),
       ),
+
     );
   }
 }

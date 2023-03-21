@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -36,7 +37,7 @@ class _ScuuessScreenState extends State<ScuuessScreen> {
                 children: [
                   SizedBox(
                     width: size.width / 1.05,
-                    height: size.height / 2,
+                    height: 400.h,
                     child: Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15.0),
@@ -102,7 +103,7 @@ class _ScuuessScreenState extends State<ScuuessScreen> {
                                 ),
                                 onPressed: () {
                                   Get.to(
-                                    () => const Login(),
+                                    () =>  Login(),
                                     fullscreenDialog: false,
                                     popGesture: true,
                                     transition: Transition.noTransition,

@@ -49,3 +49,10 @@ mutation Register(\$email:String!, \$password:String!,\$name:String!,\$fcmToken:
   }
 }
 """;
+String resetPasswordMutation='''
+mutation ResetPassword(\$email:String!)
+resetPassword(email:\$email){
+  success
+  message
+}
+''';

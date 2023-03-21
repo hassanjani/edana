@@ -1,5 +1,7 @@
 import 'package:edana/View/homePage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_ringtone_player/flutter_ringtone_player.dart';
 import 'package:get/get.dart';
 import '../utils/colors.dart';
 import 'settings.dart';
@@ -12,6 +14,28 @@ class SoundsScreen extends StatefulWidget {
 }
 
 class _SoundsScreenState extends State<SoundsScreen> {
+ 
+ 
+  List<Object?> result = ['abs'];
+
+// this is the channel that links flutter with native code
+static const channel = MethodChannel('com.example.pomo_app/mychannel');
+
+// this method waits for results from the native code 
+Future<void> getRingtones() async {
+    try {
+      result = await channel.invokeMethod('getAllRingtones');
+
+    } on PlatformException catch (ex) {
+      print('Exception: $ex.message');
+    }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getRingtones();
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -56,287 +80,60 @@ class _SoundsScreenState extends State<SoundsScreen> {
                   fontSize: 14,
                   color: Color(0xff727272)),
             ),
-            SizedBox(
-              width: size.width / 1.05,
-              height: size.height / 2.3,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                elevation: 0,
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ListTile(
-                          leading: Text(
-                            'Marimba',
-                            style: TextStyle(
-                                fontFamily: 'latoRegular',
-                                fontSize: 16,
-                                color: hintTextColor),
-                          ),
-                          dense: true,
-                          trailing: Container(
-                            height: 24,
-                            width: 24,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Color(0xff07C200)),
-                              shape: BoxShape.circle,
+            Expanded(
+              flex: 3,
+              child: ListView.builder(
+                itemCount: result.length,
+                itemBuilder: (context, index){
+                return  SizedBox(
+                width: size.width / 1.05,
+                height: size.height*0.1,
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20.0),
+                  ),
+                  elevation: 0,
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ListTile(
+                            leading: Text(
+                              '${result[index]}',
+                              style: TextStyle(
+                                  fontFamily: 'latoRegular',
+                                  fontSize: 16,
+                                  color: hintTextColor),
                             ),
-                            child: Icon(
-                              Icons.check,
-                              size: 15,
-                              color: Color(0xff07C200),
-                            ),
-                          )),
-
-//                       Row(
-// //                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                         children: [
-//                           Text(
-//                             'Guitar',
-//                             style: TextStyle(
-//                                 fontFamily: 'latoRegular',
-//                                 fontSize: 16,
-//                                 color: hintTextColor),
-//                           ),
-//                           SizedBox(
-//                             width: size.width / 1.70,
-//                           ),
-//                           Container(
-//                             height: 24,
-//                             width: 24,
-//                             decoration: BoxDecoration(
-//                               border: Border.all(color: Colors.white),
-//                               shape: BoxShape.circle,
-//                             ),
-//                             child: Icon(
-//                               Icons.check,
-//                               size: 15,
-//                               color: Colors.white,
-//                             ),
-//                           )
-//                         ],
-//                       ),
-                      ListTile(
-                        leading: Text(
-                          'Guitar',
-                          style: TextStyle(
-                              fontFamily: 'latoRegular',
-                              fontSize: 16,
-                              color: hintTextColor),
-                        ),
-                        dense: true,
-                        // trailing: Container(
-                        //   height: 24,
-                        //   width: 24,
-                        //   decoration: BoxDecoration(
-                        //     border: Border.all(color: Color(0xff07C200)),
-                        //     shape: BoxShape.circle,
-                        //   ),
-                        //   child: Icon(
-                        //     Icons.check,
-                        //     size: 15,
-                        //     color: Color(0xff07C200),
-                        //   ),
-                        // )
-                      ),
-//                       Row(
-// //                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                         children: [
-//                           Text(
-//                             'Sencha',
-//                             style: TextStyle(
-//                                 fontFamily: 'latoRegular',
-//                                 fontSize: 16,
-//                                 color: hintTextColor),
-//                           ),
-//                           SizedBox(
-//                             width: size.width / 1.70,
-//                           ),
-//                           Container(
-//                             height: 24,
-//                             width: 24,
-//                             decoration: BoxDecoration(
-//                               border: Border.all(color: Colors.white),
-//                               shape: BoxShape.circle,
-//                             ),
-//                             child: Icon(
-//                               Icons.check,
-//                               size: 15,
-//                               color: Colors.white,
-//                             ),
-//                           )
-//                         ],
-//                       ),
-                      ListTile(
-                        leading: Text(
-                          'Sencha',
-                          style: TextStyle(
-                              fontFamily: 'latoRegular',
-                              fontSize: 16,
-                              color: hintTextColor),
-                        ),
-                        dense: true,
-                        // trailing: Container(
-                        //   height: 24,
-                        //   width: 24,
-                        //   decoration: BoxDecoration(
-                        //     border: Border.all(color: Color(0xff07C200)),
-                        //     shape: BoxShape.circle,
-                        //   ),
-                        //   child: Icon(
-                        //     Icons.check,
-                        //     size: 15,
-                        //     color: Color(0xff07C200),
-                        //   ),
-                        // )
-                      ),
-//                       Row(
-// //                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                         children: [
-//                           Text(
-//                             'Classic',
-//                             style: TextStyle(
-//                                 fontFamily: 'latoRegular',
-//                                 fontSize: 16,
-//                                 color: hintTextColor),
-//                           ),
-//                           SizedBox(
-//                             width: size.width / 1.70,
-//                           ),
-//                           Container(
-//                             height: 24,
-//                             width: 24,
-//                             decoration: BoxDecoration(
-//                               border: Border.all(color: Colors.white),
-//                               shape: BoxShape.circle,
-//                             ),
-//                             child: Icon(
-//                               Icons.check,
-//                               size: 15,
-//                               color: Colors.white,
-//                             ),
-//                           )
-//                         ],
-//                       ),
-                      ListTile(
-                        leading: Text(
-                          'Classic',
-                          style: TextStyle(
-                              fontFamily: 'latoRegular',
-                              fontSize: 16,
-                              color: hintTextColor),
-                        ),
-                        dense: true,
-                        // trailing: Container(
-                        //   height: 24,
-                        //   width: 24,
-                        //   decoration: BoxDecoration(
-                        //     border: Border.all(color: Color(0xff07C200)),
-                        //     shape: BoxShape.circle,
-                        //   ),
-                        //   child: Icon(
-                        //     Icons.check,
-                        //     size: 15,
-                        //     color: Color(0xff07C200),
-                        //   ),
-                        // )),
-                      ),
-//                       Row(
-// //                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//                         children: [
-//                           Text(
-//                             'Uplift',
-//                             style: TextStyle(
-//                                 fontFamily: 'latoRegular',
-//                                 fontSize: 16,
-//                                 color: hintTextColor),
-//                           ),
-//                           SizedBox(
-//                             width: size.width / 1.70,
-//                           ),
-//                           Container(
-//                             height: 24,
-//                             width: 24,
-//                             decoration: BoxDecoration(
-//                               border: Border.all(color: Colors.white),
-//                               shape: BoxShape.circle,
-//                             ),
-//                             child: Icon(
-//                               Icons.check,
-//                               size: 15,
-//                               color: Colors.white,
-//                             ),
-//                           )
-//                         ],
-//                       ),
-                      ListTile(
-                        leading: Text(
-                          'Uplift',
-                          style: TextStyle(
-                              fontFamily: 'latoRegular',
-                              fontSize: 16,
-                              color: hintTextColor),
-                        ),
-                        dense: true,
-                        // trailing: Container(
-                        //   height: 24,
-                        //   width: 24,
-                        //   decoration: BoxDecoration(
-                        //     border: Border.all(color: Color(0xff07C200)),
-                        //     shape: BoxShape.circle,
-                        //   ),
-                        //   child: Icon(
-                        //     Icons.check,
-                        //     size: 15,
-                        //     color: Color(0xff07C200),
-                        //   ),
-                        // ),
-                      ),
-
-                      ListTile(
-                        leading: Text(
-                          'Waves',
-                          style: TextStyle(
-                              fontFamily: 'latoRegular',
-                              fontSize: 16,
-                              color: hintTextColor),
-                        ),
-                        dense: true,
-                        // trailing: Container(
-                        //   height: 24,
-                        //   width: 24,
-                        //   decoration: BoxDecoration(
-                        //     border: Border.all(color: Color(0xff07C200)),
-                        //     shape: BoxShape.circle,
-                        //   ),
-                        //   child: Icon(
-                        //     Icons.check,
-                        //     size: 15,
-                        //     color: Color(0xff07C200),
-                        //   ),
-                        // )
-                      ),
-                      SizedBox(
-                        height: size.height / 80,
-                      ),
-                    ],
+                            onTap: (){
+                                FlutterRingtonePlayer.play(
+                      android: AndroidSounds.notification,
+                      ios: IosSounds.glass,
+                      looping: true,
+                      volume: 1.0,
+                    );
+                            },
+                            dense: true,
+                            trailing: Container(
+                              height: 24,
+                              width: 24,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Color(0xff07C200)),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.check,
+                                size: 15,
+                                color: Color(0xff07C200),
+                              ),
+                            )),
                   ),
                 ),
-              ),
+              );
+                       
+              }),
             ),
-            SizedBox(
-              height: size.height / 3.3,
-            ),
+           
+         
             SizedBox(
               height: size.height / 11,
               width: size.width / 1.05,

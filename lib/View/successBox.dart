@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../utils/colors.dart';
 import 'loginDefault.dart';
@@ -30,7 +31,7 @@ class _SuccessBoxState extends State<SuccessBox> {
               children: [
                 SizedBox(
                   width: size.width / 1.05,
-                  height: size.height / 2,
+                  height: 410.h,
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15.0),
@@ -97,7 +98,7 @@ class _SuccessBoxState extends State<SuccessBox> {
                               ),
                               onPressed: () {
                                 Get.to(
-                                  () => const Login(),
+                                  () =>  Login(),
                                   fullscreenDialog: false,
                                   popGesture: true,
                                   transition: Transition.noTransition,

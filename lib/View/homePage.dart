@@ -1,6 +1,8 @@
 import 'package:edana/Controller/AuthProvider.dart';
 import 'package:edana/View/conditionsBox.dart';
+import 'package:edana/utils/images.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
@@ -24,12 +26,7 @@ class _HomePageState extends State<HomePage> {
           .continueLogin
           .termsConditions
           .isEmpty) {
-        Get.to(
-          () => const ConditionsBox(),
-          fullscreenDialog: false,
-          popGesture: true,
-          transition: Transition.noTransition,
-        );
+       
       }
     });
 
@@ -39,20 +36,21 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Scaffold(
-          backgroundColor: backGroundColor,
-          appBar: AppBar(
-            backgroundColor: appBarColor,
-            elevation: 1,
-            title: Padding(
-              padding: const EdgeInsets.only(right: 10),
+    return Scaffold(
+        backgroundColor: backGroundColor,
+        
+        appBar: AppBar(
+          backgroundColor: appBarColor,
+          elevation: 1,
+          title: Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${context.watch<AuthProvider>().loginDataModel!.continueLogin!.user!.fullName}",
+                    "${context.watch<AuthProvider>().loginDataModel!.continueLogin.user.fullName}",
                     style: TextStyle(
                         fontFamily: 'latoBold',
                         fontSize: 18,
@@ -66,37 +64,35 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-            leading: Padding(
+          ),
+          leading: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: SizedBox(
+              width: 48,
+              height: 48,
+              // child:  Image.network("${context.watch<AuthProvider>().loginDataModel!.continueLogin!.user!.photoUrl}",scale: 30),
+              child: CircleAvatar(
+                backgroundImage: NetworkImage(
+                    "${context.watch<AuthProvider>().loginDataModel!.continueLogin?.user?.photoUrl}",
+                    scale: 40),
+                backgroundColor: Colors.white,
+              ),
+            ),
+          ),
+          actions:  [
+            Padding(
               padding: EdgeInsets.all(8.0),
-              child: SizedBox(
-                width: 48,
-                height: 48,
-                // child:  Image.network("${context.watch<AuthProvider>().loginDataModel!.continueLogin!.user!.photoUrl}",scale: 30),
-                child: CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      "${context.watch<AuthProvider>().loginDataModel!.continueLogin!.user!.photoUrl}",
-                      scale: 40),
-                  backgroundColor: Colors.white,
+              child: CircleAvatar(
+                radius: 20.h,
+                backgroundImage: AssetImage(
+                  logoImg,
                 ),
               ),
             ),
-            actions: const [
-              Padding(
-                padding: EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage(
-                      'assets/images/school_logo_1.png',
-                    ),
-                    backgroundColor: Colors.white,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          body: Column(
+          ],
+        ),
+        body: SingleChildScrollView(
+          child: Column(
             children: [
               Align(
                 alignment: Alignment.topRight,
@@ -106,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                 height: size.height / 50,
               ),
               SizedBox(
-                height: size.height / 2.10,
+                height: 300.h,
                 width: size.width / 1.05,
                 child: Card(
                   shape: RoundedRectangleBorder(
@@ -120,166 +116,33 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       //mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Container(
-                          height: 55,
-                          width: 91,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/notification_main.png'),
-                              //fit: BoxFit.cover
-                            ),
-                          ),
-                        ),
+                       Image.asset(bellImg,height: 50.h,),
                         SizedBox(
                           width: size.width / 20,
                         ),
-                        Container(
-                          height: 55,
-                          width: 91,
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image:
-                                  AssetImage('assets/images/profile_main.png'),
-                              //fit: BoxFit.cover
-                            ),
-                          ),
-                        ),
+                       Image.asset(profileIcon,height: 50.h,)
                       ],
                     ),
                   ),
                 ),
               ),
               SizedBox(
-                height: size.height / 100,
+                height: 10.h,
               ),
-              Column(
-                children: [
-                  Container(
-                    height: 20,
-                    width: 88,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/edana_logo_black.png'),
-                        //fit: BoxFit.cover
-                      ),
-                    ),
-                  ),
-                  Text('Version 1.2.72',
-                      style: TextStyle(
-                          fontFamily: 'latoRegular',
-                          fontSize: 12,
-                          color: lightGreyTextColor))
-                ],
-              ),
+              Image.asset(edanaLogoimg,height: 20.h,),
               SizedBox(
-                height: size.height / 11,
-                width: size.width / 1.05,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  elevation: 2,
-                  color: Colors.white,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          Get.to(
-                            () => const HomePage(),
-                            fullscreenDialog: false,
-                            popGesture: true,
-                            transition: Transition.noTransition,
-                          );
-                        },
-                        icon: Column(
-                          children: [
-                            ImageIcon(
-                              const AssetImage(
-                                'assets/images/home_active_footer.png',
-                              ),
-                              color: mainTextColor,
-                              size: 18,
-                            ),
-                            SizedBox(
-                              height: 2,
-                            ),
-                            Text('Home',
-                                style: TextStyle(
-                                    fontFamily: 'latoRegular',
-                                    fontSize: 10,
-                                    color: mainTextColor))
-                          ],
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Column(
-                          children: [
-                            ImageIcon(
-                              const AssetImage(
-                                'assets/images/notification_inactive_footer.png',
-                              ),
-                              color: mainTextColor,
-                              size: 18,
-                            ),
-                            // Text(
-                            //   'data',
-                            //   style: GoogleFonts.lato(fontSize: 10),
-                            // )
-                          ],
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: Column(
-                          children: [
-                            ImageIcon(
-                              AssetImage(
-                                'assets/images/profile_inactive_footer.png',
-                              ),
-                              color: mainTextColor,
-                              size: 18,
-                            ),
-                            // Text(
-                            //   'data',
-                            //   style: GoogleFonts.lato(fontSize: 10),
-                            // )
-                          ],
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          Get.to(
-                            () => const SettingScreen(),
-                            fullscreenDialog: false,
-                            popGesture: true,
-                            transition: Transition.noTransition,
-                          );
-                        },
-                        icon: Column(
-                          children: [
-                            ImageIcon(
-                              AssetImage(
-                                'assets/images/settings_inactive_footer.png',
-                              ),
-                              color: mainTextColor,
-                              size: 22,
-                            ),
-                            // Text(
-                            //   'data',
-                            //   style: GoogleFonts.lato(fontSize: 10),
-                            // )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
+                height: 5.h,
+              ),
+              Text('Version 1.2.72',
+                  style: TextStyle(
+                      fontFamily: 'latoRegular',
+                      fontSize: 12.sp,
+                      color: lightGreyTextColor)),
+                      SizedBox(
+                height: 10.h,
+              ),
             ],
-          )),
-    );
+          ),
+        ));
   }
 }
